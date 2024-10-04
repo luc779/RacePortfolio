@@ -12,9 +12,9 @@
             "country": "Canada"
         },
         "distances": {
-          "swim": "1.2 miles",
-          "bike": "56 miles",
-          "run": "13.1 miles"
+          "swim": 1.2,
+          "bike": 56,
+          "run": 13.1
         },
         "times": {
           "swim": "00:31:08",
@@ -45,7 +45,7 @@
             "state": "WA",
             "country": "USA"
         },
-        "distance": "3.1",
+        "distance": 3.1,
         "times": "00:21:14",
         "division": "",
         "rank": {
@@ -65,9 +65,9 @@
             "country": "USA"
         },
         "distances": {
-            "swim": "0.93",
-            "bike": "24.8",
-            "run": "6.2"
+            "swim": 0.93,
+            "bike": 24.8,
+            "run": 6.2
         },
         "times": {
           "swim": "00:30:24",
@@ -99,9 +99,9 @@
             "country": "USA"
         },
         "distances": {
-            "swim": "0.5",
-            "bike": "12.4",
-            "run": "3.1"
+            "swim": 0.5,
+            "bike": 12.4,
+            "run": 3.1
         },
         "times": {
           "swim": "00:12:53",

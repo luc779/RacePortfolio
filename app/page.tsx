@@ -1,5 +1,6 @@
 import Image from "next/image";
-import data from "./Data/data.json";
+import data from "./Data/raceData.json";
+// import { Race } from "./Data/raceDataTypes";
 
 export default function Home() {
   return (
