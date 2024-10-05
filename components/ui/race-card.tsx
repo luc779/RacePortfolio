@@ -1,6 +1,10 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin } from "lucide-react"
+import { useState } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./dialog"
 
 interface RaceCardProps {
   chipTime: string
@@ -27,7 +31,10 @@ const RaceCard: React.FC<RaceCardProps> = ({
     genderRank,
     divisionRank,
   }) => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
   return (
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger asChild>
     <Card className="w-full max-w-md overflow-hidden">
       <CardHeader className="p-0 relative">
         <img 
@@ -62,6 +69,35 @@ const RaceCard: React.FC<RaceCardProps> = ({
         </div>
       </CardContent>
     </Card>
+    </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{raceName}</DialogTitle>
+        </DialogHeader>
+        <div className="mt-4">
+          <img 
+            src={imageUrl} 
+            alt={raceName} 
+            className="w-full h-48 object-cover rounded-md mb-4"
+          />
+          <p className="text-sm text-muted-foreground mb-2">d</p>
+          <p className="text-sm mb-1"><strong>Date:</strong> d</p>
+          <p className="text-sm mb-1"><strong>Location:</strong> lo</p>
+          <p className="text-sm mb-1"><strong>Chip Time:</strong> ch</p>
+          <div className="mb-2">
+            <strong className="text-sm">Finish Positions:</strong>
+            <ul className="list-disc list-inside text-sm ml-2">
+              <li>Overall: t</li>
+              <li>Gender: t</li>
+              <li>Division: t</li>
+            </ul>
+          </div>
+          <p className="text-sm mb-1">
+            <strong>Website:</strong>
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
