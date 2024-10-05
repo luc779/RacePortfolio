@@ -1,9 +1,9 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Flag, Ruler, Timer, TrendingDown, Trophy, Footprints, Waves, Bike } from "lucide-react"
+import { Clock, Flag, Ruler, Timer, TrendingDown, Trophy } from "lucide-react"
 import data from "../../app/Data/raceData.json";
 import { swimPace } from "../../app/Math/swimPace"
 import { mphAverage } from "../../app/Math/mphAverage"
