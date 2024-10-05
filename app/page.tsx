@@ -8,6 +8,7 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="">
         <h1>Stats</h1>
+        <p></p>
       </main>
       <main className="">
         <h1>Races</h1>
@@ -19,7 +20,7 @@ export default function Home() {
                 <>
                   <RaceCard 
                     chipTime={race.times.total_time} 
-                    raceType={race.type}
+                    raceType={race.sub_type}
                     raceName={race.event_name} 
                     imageUrl={triathlonImage.src} 
                     overallRank={race.rank.overall} 
@@ -35,7 +36,7 @@ export default function Home() {
                 <>
                   <RaceCard 
                     chipTime={race.times} 
-                    raceType={race.type}
+                    raceType={race.sub_type}
                     raceName={race.event_name} 
                     imageUrl={runningImage.src} 
                     overallRank={race.rank.overall} 
