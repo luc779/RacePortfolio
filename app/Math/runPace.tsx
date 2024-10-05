@@ -8,7 +8,7 @@ export function runPace({timeString, distance}: {timeString: string, distance: n
     const seconds = parseInt(timeParts[2], 10);
     
     // Calculate total time in hours
-    let totalTimeInHours = hours * 60 + minutes + seconds / 60;
+    const totalTimeInHours = hours * 60 + minutes + seconds / 60;
   
     // Avoid division by zero if totalTimeInHours is 0
     if (totalTimeInHours === 0) {
@@ -18,7 +18,7 @@ export function runPace({timeString, distance}: {timeString: string, distance: n
     // Calculate average speed
     let averageSpeed = totalTimeInHours / distance;
     // get decimal val of num
-    let temp = averageSpeed % 1;
+    const temp = averageSpeed % 1;
     // get whole number from val, then calculate minutes to seconds
     averageSpeed = (averageSpeed - temp) + temp * 60 / 100;
   
