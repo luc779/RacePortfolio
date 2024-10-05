@@ -2,16 +2,16 @@ import RaceCard from "@/components/ui/race-card";
 import data from "./Data/raceData.json";
 import runningImage from "./images/running.jpg"
 import triathlonImage from "./images/triathlon.jpg"
+import ConciseRaceStatistics from "@/components/ui/race-statistics";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="">
-        <h1>Stats</h1>
-        <p></p>
+    <div className="grid  items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+       <main className="">
+         <ConciseRaceStatistics />
       </main>
       <main className="">
-        <h1>Races</h1>
+        <h1 className="text-3xl font-bold text-center mb-10">Races</h1>
 
         <div className="grid grid-cols-3 gap-8">
         {data.races.map((race: any) => (
@@ -19,33 +19,17 @@ export default function Home() {
               {race.type === "triathlon" && (
                 <>
                   <RaceCard 
-                    chipTime={race.times.total_time} 
-                    raceType={race.sub_type}
-                    raceName={race.event_name} 
-                    imageUrl={triathlonImage.src} 
-                    overallRank={race.rank.overall} 
-                    genderRank={race.rank.gender} 
-                    divisionRank={race.rank.div} 
-                    city={race.location.city} 
-                    state={race.location.state} 
-                    country={race.location.country} 
-                    />
+                  race={race}
+                  imageUrl={triathlonImage.src}                  
+                  />
                 </>
               )}
               {race.type === "running" && (
                 <>
                   <RaceCard 
-                    chipTime={race.times} 
-                    raceType={race.sub_type}
-                    raceName={race.event_name} 
-                    imageUrl={runningImage.src} 
-                    overallRank={race.rank.overall} 
-                    genderRank={race.rank.gender} 
-                    divisionRank={race.rank.div} 
-                    city={race.location.city} 
-                    state={race.location.state} 
-                    country={race.location.country} 
-                    />
+                  race={race}
+                  imageUrl={runningImage.src}                   
+                  />
                 </>
               )}
             </div>

@@ -49,8 +49,12 @@
         "times": "00:21:14",
         "division": "",
         "rank": {
+          "div": 0,
+          "div_total": 0,
+          "gender": 0,
+          "gender_total": 0,
           "overall": 5,
-          "age_group": 100
+          "overall_total": 100
         }
       },
       {
