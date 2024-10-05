@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Flag, Ruler, Timer, TrendingDown, Trophy } from "lucide-react"
+import { ArrowUp, Clock, Flag, Ruler, Timer, Trophy } from "lucide-react"
 import data from "../../app/Data/raceData.json";
 import { swimPace } from "../../app/Math/swimPace"
 import { mphAverage } from "../../app/Math/mphAverage"
@@ -48,13 +48,13 @@ const calculateStatistics = (subType: any) => {
   }, 0) / totalRaces : "N/A";
 
   const bestPace = races.reduce((acc, race: any) => {
-    let sentence;
+    let sentence = "Error";
     if (race.type === "running" && race.times == bestTime) {
       sentence = runPace({ timeString: race.times, distance: race.distance }) + " min/mi"; 
     } else if (race.distances && race.times.total_time == bestTime) {
       sentence = swimPace({ timeString: race.times.swim, distance: race.distances.swim }) + " / 100yd " 
       + mphAverage({ timeString: race.times.bike, distance: race.distances.bike }) + " mph " 
-      + runPace({ timeString: race.times.run, distance: race.distances.run }) + " min/mi " || "N/A"; 
+      + runPace({ timeString: race.times.run, distance: race.distances.run }) + " min/mi "; 
     }
     return sentence ? `${acc} ${sentence}`.trim() : acc;
   }, "").trim();
@@ -69,7 +69,18 @@ const calculateStatistics = (subType: any) => {
     return sentence ? `${acc} ${sentence}`.trim() : acc;
   }, "").trim();
   
-  const averagePace = "N/D";
+  const bestFinish = races.reduce((best, race: any) => {
+    let finish;
+    if (race.type === "running") {
+      finish = ((race.rank.overall / race.rank.overall_total) * 100).toFixed(2) || "N/A"; // Grab the time object directly for running
+    } else {
+      finish = ((race.rank.overall / race.rank.overall_total) * 100).toFixed(2) || "N/A"; // Grab the total time for triathlons
+    }
+
+    if (!finish) return best; // If no time, skip
+
+    return best === "N/A" || convertTimeToMinutes(finish) < convertTimeToMinutes(best) ? finish : best;
+  }, "N/A");
 
   return {
     name: subType,
@@ -78,7 +89,7 @@ const calculateStatistics = (subType: any) => {
     bestTime,
     averageTime: averageTime === "N/A" ? "N/A" : convertMinutesToTime(averageTime),
     bestPace,
-    averagePace,
+    bestFinish,
     raceName,
   };
 };
@@ -126,12 +137,12 @@ function RaceCategoryStats({ category }: { category: typeof raceCategories[0] })
             <div className="space-y-2">
               <StatItem icon={Flag} label="Total Races" value={category.totalRaces} />
               <StatItem icon={Ruler} label="Total Distance" value={`${category.totalDistance} miles`} />
-              <StatItem icon={Trophy} label="Personal Bests" value={`${category.raceName}`} />
+              <StatItem icon={Trophy} label="Personal Best" value={category.raceName || "N/A"} />
             </div>
             <div className="space-y-2">
               <StatItem icon={Clock} label="Best Time" value={category.bestTime} />
-              <StatItem icon={Timer} label="Best Pace" value={category.bestPace} />
-              <StatItem icon={TrendingDown} label="Avg Pace" value={category.averagePace} />
+              <StatItem icon={Timer} label="Best Pace" value={category.bestPace || "N/A"} />
+              <StatItem icon={ArrowUp} label="Best Finish" value={`${category.bestFinish} %`} />
             </div>
           </div>
         </CardContent>

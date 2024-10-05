@@ -14,24 +14,12 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-10">Races</h1>
 
         <div className="grid grid-cols-3 gap-8">
-        {data.races.map((race: any) => (
+          {data.races.map((race: any) => (
             <div key={race.id}>
-              {race.type === "triathlon" && (
-                <>
-                  <RaceCard 
-                  race={race}
-                  imageUrl={triathlonImage.src}                  
-                  />
-                </>
-              )}
-              {race.type === "running" && (
-                <>
-                  <RaceCard 
-                  race={race}
-                  imageUrl={runningImage.src}                   
-                  />
-                </>
-              )}
+              <RaceCard 
+              race={race}
+              imageUrl={(race.type === "triathlon" ? triathlonImage.src : runningImage.src)}                  
+              />
             </div>
           ))}
         </div>

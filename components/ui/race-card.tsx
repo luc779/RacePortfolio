@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge"
 import { MapPin, Medal } from "lucide-react"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./dialog"
-import { swimPace } from "../../app/Math/swimPace"
-import { mphAverage } from "../../app/Math/mphAverage"
-import { runPace } from "../../app/Math/runPace"
+import { Rank, TotalTime } from "../raceCardFunctions.tsx/rank"
+import { ChipTime } from "../raceCardFunctions.tsx/chipTime"
+import { TypeDateLocation } from "../raceCardFunctions.tsx/typeDateLocation"
 
 interface RaceCardProps {
   race: any
@@ -39,15 +39,7 @@ const RaceCard: React.FC<RaceCardProps> = ({ race, imageUrl}) => {
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-sm font-semibold text-muted-foreground mb-1">Chip Time</h3>
-            <div className="text-lg font-bold">
-              {race.type === "triathlon" ? (
-                <span>{race.times.total_time}</span> 
-              ) : race.type === "running" ? (
-                <span>{race.times}</span> 
-              ) : (
-                <span>Other Event</span> 
-              )}
-            </div>
+            <TotalTime race = {race} />
           </div>
           <div className="text-right">
             <div className="grid grid-cols-3 gap-2">
@@ -65,127 +57,12 @@ const RaceCard: React.FC<RaceCardProps> = ({ race, imageUrl}) => {
           <DialogTitle>{race.event_name}</DialogTitle>
         </DialogHeader>
         <div className="">
-          <div className="grid grid-cols-3 gap-8 mb-1">
-            <div className="text-sm">
-              <strong>Type:</strong>
-              <p>{race.sub_type}</p>
-            </div>
-            <div className="text-sm">
-              <strong>Date:</strong>
-              <p>{race.date}</p>
-            </div>
-            <div className="text-sm">
-              <strong>Location:</strong>
-              <p>{race.location.city}, {race.location.state}, {race.location.country}</p>
-            </div>
-          </div>
-          <p className="text-sm mb-1"><strong>Chip Time:</strong> 
-            {race.type === "triathlon" ? (
-              <div className="grid grid-cols-3 gap-8 ml-2">
-                <div>
-                  <strong>Split</strong>
-                  <p>Swim</p>
-                  <p>T1</p>
-                  <p>Bike</p>
-                  <p>T2</p>
-                  <p>Run</p>
-                  <p>Total</p>
-                </div>
-                <div>
-                  <strong>Time</strong>
-                  {Object.entries(race.times).map(([key, times]) => (
-                    <div key={key}>
-                      <p>{times as number}</p>
-                    </div>
-                  ))}
-                </div>
-                <div>
-                  <strong>Pace</strong>
-                  <p>{swimPace({ timeString: race.times.swim, distance: race.distances.swim })} / 100yd</p>
-                  <br />
-                  <p>{mphAverage({ timeString: race.times.bike, distance: race.distances.bike })} mph</p>
-                  <br />
-                  <p>{runPace({ timeString: race.times.run, distance: race.distances.run })} min/mi</p>
-                </div>
-              </div>
-            ) : race.type === "running" ? (
-                <div className="grid grid-cols-3 gap-8 ml-2">
-                  <div>
-                    <strong>Time:</strong>
-                    <p>{race.times}</p>
-                  </div>
-                  <div>
-                    <strong>Distance</strong>
-                    <p>{race.distance}</p>
-                  </div>
-                  <div>
-                    <strong>Pace</strong>
-                    <p>{runPace({timeString: race.times, distance: race.distance})} min/mi</p>
-                  </div>
-                </div>
-            ) : (
-              <span>Other Event</span> 
-            )}
-          </p>
+          <TypeDateLocation race={race} />
+          <ChipTime race={race} />
           <div className="mb-2">
             <strong className="text-sm">Rank:</strong>
             <div className="list-disc list-inside text-sm ml-2">
-              {race.type === "triathlon" ? (
-                <div className="grid grid-cols-3 gap-8">
-                  <div>
-                  <strong>Type</strong>
-                  <p>Divison</p>
-                  <p>Gender</p>
-                  <p>Overall</p>
-                  </div>
-                  <div>
-                    <strong>Place</strong>
-                    {["div", "gender", "overall"].map((key) => (
-                      <p key={key}>{race.rank[key] === 0 ? "No Data" : race.rank[key]}</p>
-                    ))}
-                  </div>
-                  <div>
-                    <strong>Total</strong>
-                    {["div_total", "gender_total", "overall_total"].map((key) => (
-                      <p key={key}>{race.rank[key]}</p>
-                    ))}
-                  </div>
-                </div>
-              ) : race.type === "running" ? (
-                <div className="grid grid-cols-3 gap-8">
-                  <div>
-                  <strong>Type</strong>
-                  <p>Divison</p>
-                  <p>Gender</p>
-                  <p>Overall</p>
-                  </div>
-                  <div>
-                    <strong>Place</strong>
-                    {["div", "gender", "overall"].map((key) => (
-                      <p key={key} className="flex items-center">
-                      {race.rank[key] === 0 ? (
-                        "NA"
-                      ) : race.rank[key] <= 3 ? (
-                        <>
-                          <Medal className="w-4 h-4 mr-1" />
-                          Top {race.rank[key]}
-                        </>
-                      ) : (
-                        race.rank[key]
-                      )}
-                    </p>
-                    ))}
-                  </div>
-                  <div>
-                    <strong>Total</strong>
-                    {["div_total", "gender_total", "overall_total"].map((key) => (
-                      <p key={key}>{race.rank[key] === 0 ? "No Data" : race.rank[key]}</p>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <span>Other Event</span> 
-              )}
+              <Rank race ={race} />
             </div>
           </div>
         </div>
