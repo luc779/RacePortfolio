@@ -1,5 +1,5 @@
 export function swimPace({timeString, distance}: {timeString: string, distance: number}) {
-    var  seconds = 0.0;
+    let  seconds = 0.0;
     const timeParts = timeString.split(":");
     // Check if the timeString is valid and contains at least minutes
     if (timeParts.length < 2) {
